@@ -1,6 +1,6 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
+author: "Jama Willis"
 description: "My final project"
 output:
   distill::distill_article:
@@ -11,4 +11,11 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+The relationship between crime in Caribbean countries (Jamaica, Barbados, and Trindad & Tobago) and the rate of crime in the Caribbean 
+I am interested in exploring data related to democracy within the Caribbean countries (specific amalysis on Jamaica, Barbados, and Trinidad and Tobago) and how crime rates in the Caribbean impact their democratic institutions. Crime has become the main concern of people in the region, and many citizens are willing to trade their civil rights for security, according to surveys. In fact, crime erodes trust in democracy, as people begin to question democratic governments’ ability to provide adequate protection. A recent IDB study has quantified the high cost that Latin America and the Caribbean pays for its crime problem: around 3.5% of its GDP. As a Caribbean native, I think it is important to understand the correlation between the two variables, because there has a been a steady increase in crime within the region and it now begs the question, how effective our Caribbean government's in combating the issue. 
+
+The relationship between LGBTQ+ Education and Education in United States Schools
+I am also interested in looking into the impact of LGBTQ+ history on education and the  curriculum in schools. LGBTQ youth in U.S. schools face pervasive levels of bullying and abuse from peers and school staff. Analyzing taken from the  National School Climate Survey, the vast majority of LGBTQ+ students who attended school in-person at some point during the 2021–2022 academic year (83.1%) experienced in-person harassment or assault based on personal characteristics, including sexual orientation, gender expression, gender, religion, actual or perceived race and ethnicity, and actual or perceived disability. I hate to even think about the school climate in that community, but isn’t it time we start to do better as a nation? Isn’t it time that community and political leaders stop demonizing LGBTQ people? Isn’t it time parents stop setting terrible examples for their children? Schools should not be hostile places for LGBTQ kids, which is why looking into the contributions that LGBTQ+ history can offer to students in schools, could shed further clarity on the situation (especially for more conservative communities who aren't as accepting).
+
+The relationship between students from Black Immigrant Households and their likelihood of success
+Additionally, I am interested in exploring qualitative data that has to do with student immigrants and their likelihood of success, coming specifically from a black immigrant household. Many of students, like myself, who come from developing countries have this ingrained pressure to succeed. Whether we are cognizant about this or not, hearing stories from relatives who have had to struggle in order to make it in American society, it internally has a toll on us. I would analyze data the relationship between students from black Immigrant student and their success in the American culture, by looking specifically at economic achievement and academic achievement. This study will look more in depth at first-generation students. 
