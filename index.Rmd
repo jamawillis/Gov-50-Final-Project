@@ -7,11 +7,20 @@ output:
     self_contained: false
 ---
 
-
-
-## Project thoughts
-
-The relationship between crime in Caribbean countries (Jamaica, Barbados, and Trindad & Tobago) and the rate of crime in the Caribbean I am interested in exploring data related to democracy within the Caribbean countries (specific amalysis on Jamaica, Barbados, and Trinidad and Tobago) and how crime rates in the Caribbean impact their democratic institutions. Crime has become the main concern of people in the region, and many citizens are willing to trade their civil rights for security, according to surveys. In fact, crime erodes trust in democracy, as people begin to question democratic governments’ ability to provide adequate protection. A recent IDB study has quantified the high cost that Latin America and the Caribbean pays for its crime problem: around 3.5% of its GDP. As a Caribbean native, I think it is important to understand the correlation between the two variables, because there has a been a steady increase in crime within the region and it now begs the question, how effective our Caribbean government’s in combating the issue.
-
 ## Project Proposal
-In Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within the Caribbean. I hypothesize that crime impacts Caribbean democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. My data is compromised of the every countries V-Dem score indicators (all the factors that attribute to the overall democratic index of a country) from 1996 to 2021. My analysis will look at only Caribbean countries, with a main focus on Jamaica, Barbados, Trinidad and Tobago, and Haiti. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in the Caribbean. 
+In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. My data is compromised of the every countries V-Dem score indicators (all the factors that attribute to the overall democratic index of a country) from 1996 to 2021. My analysis will look at only Caribbean and Latin American countries. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin Amercia and the Caribbean. 
+
+```{r}
+library(tidyverse)
+
+dem_data <- read.csv("Democratic Index and RL Data Points - M3.csv")
+dem_data <- dem_data |>
+  select(EIU21RL, Democratic.Index..2021., Country)
+
+ggplot(dem_data, aes(x=Democratic.Index..2021., y=EIU21RL))+
+  geom_point(aes(color=Country)) +
+  labs(x = "Democratic Index",
+      y = "Rule of Law/Crime Index",
+      title = "The Impact of Crime on Democratic Index in Latin American and Caribbean Nations")
+```
+The democratic index is the explanatory variable and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
