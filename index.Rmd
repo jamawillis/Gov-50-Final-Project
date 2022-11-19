@@ -24,3 +24,28 @@ ggplot(dem_data, aes(x=Democratic.Index..2021., y=EIU21RL))+
       title = "The Impact of Crime on Democratic Index in Latin American and Caribbean Nations")
 ```
 The democratic index is the explanatory variable and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
+
+#Second Visualization
+
+```{r}
+
+
+dem_data <- read.csv("Democratic Index and RL Data Points - M3.csv")
+dem_data <- dem_data |>
+  select(EIU21RL, Democratic.Index..2021., Country)
+
+ggplot(dem_data, aes(x=Democratic.Index..2021., y=EIU21RL))+
+  geom_smooth(method = "lm", se=FALSE)+
+  geom_point(aes(color=Country)) +
+  labs(x = "Democratic Index",
+      y = "Rule of Law/Crime Index",
+      title = "The Impact of Crime on Democratic Index in Latin American and Caribbean Nations")
+```
+Based on this data, the line of regression shows a positive association between the Democratic index and the Rule of law/ Crime index. 
+
+
+```{r}
+dem_lm <- lm(EIU21RL ~ Democratic.Index..2021., data = dem_data)
+dem_lm
+```
+The `lm` summary shows that there's a positive slope and that R^2 value shows that this is a relatively strong linear association. 
