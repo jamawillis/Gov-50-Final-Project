@@ -1,13 +1,13 @@
 ---
-title: "Gov 50 Final Project"
+title: "Caribbean Crime and Relation to Democracy"
 author: "Jama Willis"
-description: "My final project"
+description: "Analysis of crime within the Caribbean and its impact on democracy "
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-## Project Proposal
+## Introduction
 In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. My data is compromised of the every countries V-Dem score indicators (all the factors that attribute to the overall democratic index of a country) from 1996 to 2021. My analysis will look at only Caribbean and Latin American countries. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin Amercia and the Caribbean. 
 
 ```{r}
