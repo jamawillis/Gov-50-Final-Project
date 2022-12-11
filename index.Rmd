@@ -7,45 +7,76 @@ output:
     self_contained: false
 ---
 
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+
 ## Introduction
-In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. My data is compromised of the every countries V-Dem score indicators (all the factors that attribute to the overall democratic index of a country) from 1996 to 2021. My analysis will look at only Caribbean and Latin American countries. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin Amercia and the Caribbean. 
+Democratization has suffered more reversals in 2021, with the percentage of people living in a democracy falling to well below 50% and authoritarian regimes gaining ground. The project focuses on the impact of crime and democracy using the specific variable "Rule of Law (RL)" as a measure. The data goes back from 1996 to 2021 and has various countries. However, there will be a specific obersvational study on Latin America and the Caribbean and a possible cross comparison to different regions of the world and their relationship to crime and democracy. 
+
+In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin America and the Caribbean. 
+
+##Data and Research Design 
+The EIU Democracy Index provides a snapshot of the state of world democracy for 165 independent states and two territories. The Democracy Index is based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture. To analyze the relationship between crime and democracy, I used data complied over the years from the Economic Intelligence Unit (EIU):
+
+1. https://www.eiu.com/n/campaigns/democracy-index-2020/
+
+
+##Results
+
+
+##Conclusion
+
 
 ```{r}
-library(tidyverse)
-
-dem_data <- read.csv("Democratic Index and RL Data Points - M3.csv")
-dem_data <- dem_data |>
-  select(EIU21RL, Democratic.Index..2021., Country)
-
-ggplot(dem_data, aes(x=Democratic.Index..2021., y=EIU21RL))+
-  geom_point(aes(color=Country)) +
-  labs(x = "Democratic Index",
-      y = "Rule of Law/Crime Index",
-      title = "The Impact of Crime on Democratic Index in Latin American and Caribbean Nations")
+eiu <- read_csv("EIU.csv")|>
+  pivot_longer(
+    cols = -c(code, country),
+    names_prefix = "EIU",
+    names_to = "var",
+    values_to = "val") |>
+  mutate(
+    year_suffix = substr(var, 1, 2),
+    year = as.numeric(
+      paste0(
+        if_else(grepl("^[0-2]",year_suffix) == TRUE, 20, 19),
+        year_suffix)),
+    var = substr(var, 3, 4)) |>
+  pivot_wider(names_from = var, values_from = val) |>
+  #Make variables numeric
+  mutate_at(
+    .vars = c("VA", "PV", "GE", "RQ", "RL", "CC"),
+    ~ gsub("\\.\\.", NA, .x)) |>
+  mutate_at(
+    .vars = c("VA", "PV", "GE", "RQ", "RL", "CC"),
+    ~ gsub("\\#N.*", NA, .x)) |>
+  mutate_at(
+    .vars = c("VA", "PV", "GE", "RQ", "RL", "CC"),
+    ~ as.numeric(.x)) |>
+  #Small fixes
+  mutate(
+    country = if_else(grepl("Ivoir", country), "Cote d'Ivory", country)
+  )
 ```
+
+```{r}
+sort(unique(eiu$country))
+carib_list <- c("Antigua and Barbuda", "Bahamas, The", "Barbados") #Add more! Match from list of countries above
+
+eiu <- eiu |>
+  mutate(i_caribbean = if_else(country %in% carib_list, 1, 0))
+
+summary(lm(data = eiu, GE ~ RL + VA + PV))$coefficients
+summary(lm(data = eiu |> filter(i_caribbean == 1), GE ~ RL + VA + PV))$coefficients |> knitr::kable(digits = 2)
+
+```
+
+
 The democratic index is the explanatory variable and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
 
-#Second Visualization
+The higher the rule of law, the stronger enforcement against crime in the country.
 
-```{r}
-
-
-dem_data <- read.csv("Democratic Index and RL Data Points - M3.csv")
-dem_data <- dem_data |>
-  select(EIU21RL, Democratic.Index..2021., Country)
-
-ggplot(dem_data, aes(x=Democratic.Index..2021., y=EIU21RL))+
-  geom_smooth(method = "lm", se=FALSE)+
-  geom_point(aes(color=Country)) +
-  labs(x = "Democratic Index",
-      y = "Rule of Law/Crime Index",
-      title = "The Impact of Crime on Democratic Index in Latin American and Caribbean Nations")
-```
 Based on this data, the line of regression shows a positive association between the Democratic index and the Rule of law/ Crime index. 
 
-
-```{r}
-dem_lm <- lm(EIU21RL ~ Democratic.Index..2021., data = dem_data)
-dem_lm
-```
 The `lm` summary shows that there's a positive slope and that R^2 value shows that this is a relatively strong linear association. 
