@@ -56,7 +56,8 @@ eiu <- read_csv("EIU.csv")|>
     ~ as.numeric(.x)) |>
   #Small fixes
   mutate(
-    country = if_else(grepl("Ivoir", country), "Cote d'Ivory", country)
+    country = if_else(grepl("Ivoir", country), "Cote d'Ivory", country),
+    country = if_else(grepl("R\xe9union", country), "Réunion", country)
   )
 ```
 
