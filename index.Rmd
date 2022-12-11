@@ -17,16 +17,16 @@ Democratization has suffered more reversals in 2021, with the percentage of peop
 
 In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin America and the Caribbean. 
 
-##Data and Research Design 
+## Data and Research Design 
 The EIU Democracy Index provides a snapshot of the state of world democracy for 165 independent states and two territories. The Democracy Index is based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture. To analyze the relationship between crime and democracy, I used data complied over the years from the Economic Intelligence Unit (EIU):
 
 1. https://www.eiu.com/n/campaigns/democracy-index-2020/
 
 
-##Results
+## Results
 
 
-##Conclusion
+## Conclusion
 
 
 ```{r}
