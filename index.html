@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["EIU.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["EIU.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-2-2.png","index_files/figure-html5/unnamed-chunk-2-3.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1525,311 +1525,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ol type="1">
 <li><a href="https://www.eiu.com/n/campaigns/democracy-index-2020/" class="uri">https://www.eiu.com/n/campaigns/democracy-index-2020/</a></li>
 </ol>
+<p>Our research design is observational analysis on the variables of crime (RL) on the democratic index (VA) within Caribbean countries. VA stands for “Voice and Accountability” within our data and is calculated based on a country’s democracy index, vested interests, accountability of public officials, human rights, and freedom of association. RL stands for “Rule of Law” and is calculated based on a country’s violent crime, organized crime rate, fairness of judicial process, enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection, and private property protection.</p>
+<p>The RL variable is the outcome variable. A countries rule of law index was calculated on a scale of 0 -4 and it took into consideration questions such as “Are violent demonstrations or violent civil/labor unrest likely to pose a threat to property or the conduct of business? Is violent crime likely to pose a significant problem for government and/or business?” Where a score of 0 = rule of law/crime is not a problem, and 4 = rule of law/crime is a very significant problem. The outcome ranges from 0 to 4, with a median of .45 - .50.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>The VA variable is the explanatory variable. The VA variable was calculated on a scale of 0 -4 and it took into consideration questions such as “How accountable are public officials? Is recourse possible in the case of unfair treatment do safeguards/sanctions exist to ensure to ensure officials perform competently? Is there a risk that this country could be accused of serious human rights abuses?” Where a score of 0 = very low likelihood of this country being accused of human rights abuses, and 4 = very high likelihood of this country being accused of human rights abuses. The indicators range from 0 through 4 (bad), with the median being approxiamately .56.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
 <h2 id="results">Results</h2>
-<h2 id="conclusion">Conclusion</h2>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<p>Regression Results</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>eiu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"EIU.csv"</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span></span>
-<span>    cols <span class='op'>=</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>code</span>, <span class='va'>country</span><span class='op'>)</span>,</span>
-<span>    names_prefix <span class='op'>=</span> <span class='st'>"EIU"</span>,</span>
-<span>    names_to <span class='op'>=</span> <span class='st'>"var"</span>,</span>
-<span>    values_to <span class='op'>=</span> <span class='st'>"val"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    year_suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>var</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,</span>
-<span>    year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span></span>
-<span>      <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span></span>
-<span>        <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"^[0-2]"</span>,<span class='va'>year_suffix</span><span class='op'>)</span> <span class='op'>==</span> <span class='cn'>TRUE</span>, <span class='fl'>20</span>, <span class='fl'>19</span><span class='op'>)</span>,</span>
-<span>        <span class='va'>year_suffix</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span>    var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>var</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>var</span>, values_from <span class='op'>=</span> <span class='va'>val</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='co'>#Make variables numeric</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span><span class='op'>(</span></span>
-<span>    .vars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VA"</span>, <span class='st'>"PV"</span>, <span class='st'>"GE"</span>, <span class='st'>"RQ"</span>, <span class='st'>"RL"</span>, <span class='st'>"CC"</span><span class='op'>)</span>,</span>
-<span>    <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"\\.\\."</span>, <span class='cn'>NA</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span><span class='op'>(</span></span>
-<span>    .vars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VA"</span>, <span class='st'>"PV"</span>, <span class='st'>"GE"</span>, <span class='st'>"RQ"</span>, <span class='st'>"RL"</span>, <span class='st'>"CC"</span><span class='op'>)</span>,</span>
-<span>    <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"\\#N.*"</span>, <span class='cn'>NA</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span><span class='op'>(</span></span>
-<span>    .vars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"VA"</span>, <span class='st'>"PV"</span>, <span class='st'>"GE"</span>, <span class='st'>"RQ"</span>, <span class='st'>"RL"</span>, <span class='st'>"CC"</span><span class='op'>)</span>,</span>
-<span>    <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='co'>#Small fixes</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    country <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Ivoir"</span>, <span class='va'>country</span><span class='op'>)</span>, <span class='st'>"Cote d'Ivory"</span>, <span class='va'>country</span><span class='op'>)</span>,</span>
-<span>    country <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"R\xe9union"</span>, <span class='va'>country</span><span class='op'>)</span>, <span class='st'>"Réunion"</span>, <span class='va'>country</span><span class='op'>)</span>,</span>
-<span>    country <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"S\xe3o Tom\xe9 and Principe"</span>, <span class='va'>country</span><span class='op'>)</span>, <span class='st'>"São Tomé and Principe"</span>, <span class='va'>country</span><span class='op'>)</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>eiu</span><span class='op'>$</span><span class='va'>country</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  [1] &quot;Afghanistan&quot;                             
-  [2] &quot;Albania&quot;                                 
-  [3] &quot;Algeria&quot;                                 
-  [4] &quot;American Samoa&quot;                          
-  [5] &quot;Andorra&quot;                                 
-  [6] &quot;Angola&quot;                                  
-  [7] &quot;Anguilla&quot;                                
-  [8] &quot;Antigua and Barbuda&quot;                     
-  [9] &quot;Argentina&quot;                               
- [10] &quot;Armenia&quot;                                 
- [11] &quot;Aruba&quot;                                   
- [12] &quot;Australia&quot;                               
- [13] &quot;Austria&quot;                                 
- [14] &quot;Azerbaijan&quot;                              
- [15] &quot;Bahamas, The&quot;                            
- [16] &quot;Bahrain&quot;                                 
- [17] &quot;Bangladesh&quot;                              
- [18] &quot;Barbados&quot;                                
- [19] &quot;Belarus&quot;                                 
- [20] &quot;Belgium&quot;                                 
- [21] &quot;Belgium-Luxembourg&quot;                      
- [22] &quot;Belize&quot;                                  
- [23] &quot;Benin&quot;                                   
- [24] &quot;Bermuda&quot;                                 
- [25] &quot;Bhutan&quot;                                  
- [26] &quot;Bolivia&quot;                                 
- [27] &quot;Bosnia and Herzegovina&quot;                  
- [28] &quot;Botswana&quot;                                
- [29] &quot;Brazil&quot;                                  
- [30] &quot;British Virgin Islands&quot;                  
- [31] &quot;Brunei Darussalam&quot;                       
- [32] &quot;Bulgaria&quot;                                
- [33] &quot;Burkina Faso&quot;                            
- [34] &quot;Burundi&quot;                                 
- [35] &quot;Cambodia&quot;                                
- [36] &quot;Cameroon&quot;                                
- [37] &quot;Canada&quot;                                  
- [38] &quot;Canton and Enderbury Islands&quot;            
- [39] &quot;Cape Verde&quot;                              
- [40] &quot;Cayman Islands&quot;                          
- [41] &quot;Central African Republic&quot;                
- [42] &quot;Chad&quot;                                    
- [43] &quot;Channel Islands&quot;                         
- [44] &quot;Chile&quot;                                   
- [45] &quot;China&quot;                                   
- [46] &quot;Christmas Island&quot;                        
- [47] &quot;Cocos (Keeling) Islands&quot;                 
- [48] &quot;Colombia&quot;                                
- [49] &quot;Comoros&quot;                                 
- [50] &quot;Congo, Dem. Rep.&quot;                        
- [51] &quot;Congo, Rep.&quot;                             
- [52] &quot;Cook Islands&quot;                            
- [53] &quot;Costa Rica&quot;                              
- [54] &quot;Cote d&#39;Ivory&quot;                            
- [55] &quot;Croatia&quot;                                 
- [56] &quot;Cuba&quot;                                    
- [57] &quot;Cyprus&quot;                                  
- [58] &quot;Czech Republic&quot;                          
- [59] &quot;Czechoslovakia (former)&quot;                 
- [60] &quot;Denmark&quot;                                 
- [61] &quot;Djibouti&quot;                                
- [62] &quot;Dominica&quot;                                
- [63] &quot;Dominican Republic&quot;                      
- [64] &quot;Ecuador&quot;                                 
- [65] &quot;Egypt, Arab Rep.&quot;                        
- [66] &quot;El Salvador&quot;                             
- [67] &quot;Equatorial Guinea&quot;                       
- [68] &quot;Eritrea&quot;                                 
- [69] &quot;Estonia&quot;                                 
- [70] &quot;Eswatini&quot;                                
- [71] &quot;Ethiopia&quot;                                
- [72] &quot;Faeroe Islands&quot;                          
- [73] &quot;Falkland Islands&quot;                        
- [74] &quot;Fiji&quot;                                    
- [75] &quot;Finland&quot;                                 
- [76] &quot;France&quot;                                  
- [77] &quot;French Guiana&quot;                           
- [78] &quot;French Polynesia&quot;                        
- [79] &quot;Gabon&quot;                                   
- [80] &quot;Gambia, The&quot;                             
- [81] &quot;Gaza Strip&quot;                              
- [82] &quot;Georgia&quot;                                 
- [83] &quot;German Democratic Republic (former)&quot;     
- [84] &quot;Germany&quot;                                 
- [85] &quot;Germany, Fed. Rep. (former)&quot;             
- [86] &quot;Ghana&quot;                                   
- [87] &quot;Gibraltar&quot;                               
- [88] &quot;Greece&quot;                                  
- [89] &quot;Greenland&quot;                               
- [90] &quot;Grenada&quot;                                 
- [91] &quot;Guadeloupe&quot;                              
- [92] &quot;Guam&quot;                                    
- [93] &quot;Guatemala&quot;                               
- [94] &quot;Guinea&quot;                                  
- [95] &quot;Guinea-Bissau&quot;                           
- [96] &quot;Guyana&quot;                                  
- [97] &quot;Haiti&quot;                                   
- [98] &quot;Honduras&quot;                                
- [99] &quot;Hong Kong SAR, China&quot;                    
-[100] &quot;Hungary&quot;                                 
-[101] &quot;Iceland&quot;                                 
-[102] &quot;India&quot;                                   
-[103] &quot;Indonesia&quot;                               
-[104] &quot;Iran, Islamic Rep.&quot;                      
-[105] &quot;Iraq&quot;                                    
-[106] &quot;Ireland&quot;                                 
-[107] &quot;Isle of Man&quot;                             
-[108] &quot;Israel&quot;                                  
-[109] &quot;Italy&quot;                                   
-[110] &quot;Jamaica&quot;                                 
-[111] &quot;Japan&quot;                                   
-[112] &quot;Jersey, Channel Islands&quot;                 
-[113] &quot;Johnston Island&quot;                         
-[114] &quot;Jordan&quot;                                  
-[115] &quot;Kazakhstan&quot;                              
-[116] &quot;Kenya&quot;                                   
-[117] &quot;Kiribati&quot;                                
-[118] &quot;Korea, Dem. Rep.&quot;                        
-[119] &quot;Korea, Rep.&quot;                             
-[120] &quot;Kosovo&quot;                                  
-[121] &quot;Kuwait&quot;                                  
-[122] &quot;Kyrgyz Republic&quot;                         
-[123] &quot;Lao PDR&quot;                                 
-[124] &quot;Latvia&quot;                                  
-[125] &quot;Lebanon&quot;                                 
-[126] &quot;Lesotho&quot;                                 
-[127] &quot;Liberia&quot;                                 
-[128] &quot;Libya&quot;                                   
-[129] &quot;Liechtenstein&quot;                           
-[130] &quot;Lithuania&quot;                               
-[131] &quot;Luxembourg&quot;                              
-[132] &quot;Macao SAR, China&quot;                        
-[133] &quot;Madagascar&quot;                              
-[134] &quot;Malawi&quot;                                  
-[135] &quot;Malaysia&quot;                                
-[136] &quot;Maldives&quot;                                
-[137] &quot;Mali&quot;                                    
-[138] &quot;Malta&quot;                                   
-[139] &quot;Marshall Islands&quot;                        
-[140] &quot;Martinique&quot;                              
-[141] &quot;Mauritania&quot;                              
-[142] &quot;Mauritius&quot;                               
-[143] &quot;Mayotte&quot;                                 
-[144] &quot;Mexico&quot;                                  
-[145] &quot;Micronesia, Fed. Sts.&quot;                   
-[146] &quot;Moldova&quot;                                 
-[147] &quot;Monaco&quot;                                  
-[148] &quot;Mongolia&quot;                                
-[149] &quot;Montenegro&quot;                              
-[150] &quot;Montserrat&quot;                              
-[151] &quot;Morocco&quot;                                 
-[152] &quot;Mozambique&quot;                              
-[153] &quot;Myanmar&quot;                                 
-[154] &quot;Namibia&quot;                                 
-[155] &quot;Nauru&quot;                                   
-[156] &quot;Nepal&quot;                                   
-[157] &quot;Netherlands&quot;                             
-[158] &quot;Netherlands Antilles (former)&quot;           
-[159] &quot;New Caledonia&quot;                           
-[160] &quot;New Zealand&quot;                             
-[161] &quot;Nicaragua&quot;                               
-[162] &quot;Niger&quot;                                   
-[163] &quot;Nigeria&quot;                                 
-[164] &quot;Niue&quot;                                    
-[165] &quot;Norfolk Island&quot;                          
-[166] &quot;North Macedonia&quot;                         
-[167] &quot;Norway&quot;                                  
-[168] &quot;Oman&quot;                                    
-[169] &quot;Pakistan&quot;                                
-[170] &quot;Palau&quot;                                   
-[171] &quot;Panama&quot;                                  
-[172] &quot;Panama Canal Zone&quot;                       
-[173] &quot;Papua New Guinea&quot;                        
-[174] &quot;Paraguay&quot;                                
-[175] &quot;Peru&quot;                                    
-[176] &quot;Philippines&quot;                             
-[177] &quot;Poland&quot;                                  
-[178] &quot;Portugal&quot;                                
-[179] &quot;Puerto Rico&quot;                             
-[180] &quot;Qatar&quot;                                   
-[181] &quot;Réunion&quot;                                 
-[182] &quot;Rhodesia&quot;                                
-[183] &quot;Romania&quot;                                 
-[184] &quot;Russian Federation&quot;                      
-[185] &quot;Rwanda&quot;                                  
-[186] &quot;Samoa&quot;                                   
-[187] &quot;San Marino&quot;                              
-[188] &quot;São Tomé and Principe&quot;                   
-[189] &quot;Saudi Arabia&quot;                            
-[190] &quot;Senegal&quot;                                 
-[191] &quot;Serbia&quot;                                  
-[192] &quot;Seychelles&quot;                              
-[193] &quot;Sierra Leone&quot;                            
-[194] &quot;Singapore&quot;                               
-[195] &quot;Slovak Republic&quot;                         
-[196] &quot;Slovenia&quot;                                
-[197] &quot;Solomon Islands&quot;                         
-[198] &quot;Somalia&quot;                                 
-[199] &quot;South Africa&quot;                            
-[200] &quot;South Sudan&quot;                             
-[201] &quot;Spain&quot;                                   
-[202] &quot;Sri Lanka&quot;                               
-[203] &quot;St. Helena&quot;                              
-[204] &quot;St. Kitts and Nevis&quot;                     
-[205] &quot;St. Lucia&quot;                               
-[206] &quot;St. Pierre and Miquelon&quot;                 
-[207] &quot;St. Vincent and the Grenadines&quot;          
-[208] &quot;Sudan&quot;                                   
-[209] &quot;Suriname&quot;                                
-[210] &quot;Sweden&quot;                                  
-[211] &quot;Switzerland&quot;                             
-[212] &quot;Syrian Arab Republic&quot;                    
-[213] &quot;Taiwan, China&quot;                           
-[214] &quot;Tajikistan&quot;                              
-[215] &quot;Tanzania&quot;                                
-[216] &quot;Thailand&quot;                                
-[217] &quot;Timor-Leste&quot;                             
-[218] &quot;Togo&quot;                                    
-[219] &quot;Tokelau&quot;                                 
-[220] &quot;Tonga&quot;                                   
-[221] &quot;Trinidad and Tobago&quot;                     
-[222] &quot;Tunisia&quot;                                 
-[223] &quot;Turkey&quot;                                  
-[224] &quot;Turkmenistan&quot;                            
-[225] &quot;Turks and Caicos Islands&quot;                
-[226] &quot;Tuvalu&quot;                                  
-[227] &quot;Uganda&quot;                                  
-[228] &quot;Ukraine&quot;                                 
-[229] &quot;United Arab Emirates&quot;                    
-[230] &quot;United Kingdom&quot;                          
-[231] &quot;United States&quot;                           
-[232] &quot;Uruguay&quot;                                 
-[233] &quot;USSR (former)&quot;                           
-[234] &quot;Uzbekistan&quot;                              
-[235] &quot;Vanuatu&quot;                                 
-[236] &quot;Venezuela, RB&quot;                           
-[237] &quot;Vietnam&quot;                                 
-[238] &quot;Vietnam, Former North&quot;                   
-[239] &quot;Vietnam, Former South&quot;                   
-[240] &quot;Virgin Islands (U.S.)&quot;                   
-[241] &quot;Wallis and Futuna&quot;                       
-[242] &quot;West Bank and Gaza&quot;                      
-[243] &quot;Western Sahara&quot;                          
-[244] &quot;Windward Islands&quot;                        
-[245] &quot;Yemen, Former Arab Republic Of&quot;          
-[246] &quot;Yemen, People&#39;s Democratic Republic of&quot;  
-[247] &quot;Yemen, Rep.&quot;                             
-[248] &quot;Yugoslavia, Socialist Fed. Rep. (former)&quot;
-[249] &quot;Zambia&quot;                                  
-[250] &quot;Zimbabwe&quot;                                </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>carib_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Antigua and Barbuda"</span>, <span class='st'>"Bahamas, The"</span>, <span class='st'>"Barbados"</span><span class='op'>)</span> <span class='co'>#Add more! Match from list of countries above</span></span>
-<span></span>
-<span><span class='va'>eiu</span> <span class='op'>&lt;-</span> <span class='va'>eiu</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>i_caribbean <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>country</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>carib_list</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>eiu</span>, <span class='va'>GE</span> <span class='op'>~</span> <span class='va'>RL</span> <span class='op'>+</span> <span class='va'>VA</span> <span class='op'>+</span> <span class='va'>PV</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>coefficients</span></span></code></pre>
-</div>
-<pre><code>                Estimate  Std. Error    t value      Pr(&gt;|t|)
-(Intercept) -0.135506119 0.005424275 -24.981427 2.966644e-127
-RL           0.881091111 0.016479732  53.465136  0.000000e+00
-VA           0.154078227 0.016290030   9.458437  5.436910e-21
-PV          -0.007321898 0.015916164  -0.460029  6.455229e-01</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>eiu</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>i_caribbean</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='va'>GE</span> <span class='op'>~</span> <span class='va'>RL</span> <span class='op'>+</span> <span class='va'>VA</span> <span class='op'>+</span> <span class='va'>PV</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>coefficients</span> <span class='op'>|&gt;</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># multiple regression</span></span>
+<span><span class='va'>lm_multiple</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>RL</span> <span class='op'>~</span> <span class='va'>VA</span> <span class='op'>+</span> <span class='va'>PV</span> <span class='op'>+</span> <span class='va'>GE</span> <span class='op'>+</span> <span class='va'>RQ</span> <span class='op'>+</span> <span class='va'>RL</span> <span class='op'>+</span> <span class='va'>CC</span>, data<span class='op'>=</span><span class='va'>caribbean_eiu</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_multiple</span><span class='op'>)</span><span class='op'>$</span><span class='va'>coefficients</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
 <thead>
@@ -1844,40 +1559,55 @@ PV          -0.007321898 0.015916164  -0.460029  6.455229e-01</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">-0.26</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">-1.37</td>
-<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">-0.0217</td>
+<td style="text-align: right;">0.0164</td>
+<td style="text-align: right;">-1.3230</td>
+<td style="text-align: right;">0.1864</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">RL</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.21</td>
-<td style="text-align: right;">4.28</td>
-<td style="text-align: right;">0.00</td>
+<td style="text-align: left;">VA</td>
+<td style="text-align: right;">0.3381</td>
+<td style="text-align: right;">0.0361</td>
+<td style="text-align: right;">9.3760</td>
+<td style="text-align: right;">0.0000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VA</td>
-<td style="text-align: right;">-0.08</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">-0.46</td>
-<td style="text-align: right;">0.65</td>
+<td style="text-align: left;">PV</td>
+<td style="text-align: right;">0.1137</td>
+<td style="text-align: right;">0.0344</td>
+<td style="text-align: right;">3.3074</td>
+<td style="text-align: right;">0.0010</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PV</td>
-<td style="text-align: right;">0.36</td>
-<td style="text-align: right;">0.29</td>
-<td style="text-align: right;">1.26</td>
-<td style="text-align: right;">0.22</td>
+<td style="text-align: left;">GE</td>
+<td style="text-align: right;">0.1234</td>
+<td style="text-align: right;">0.0302</td>
+<td style="text-align: right;">4.0834</td>
+<td style="text-align: right;">0.0001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RQ</td>
+<td style="text-align: right;">0.2668</td>
+<td style="text-align: right;">0.0260</td>
+<td style="text-align: right;">10.2657</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CC</td>
+<td style="text-align: right;">0.1473</td>
+<td style="text-align: right;">0.0236</td>
+<td style="text-align: right;">6.2507</td>
+<td style="text-align: right;">0.0000</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>The democratic index is the explanatory variable and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime.</p>
 <p>The higher the rule of law, the stronger enforcement against crime in the country.</p>
 <p>Based on this data, the line of regression shows a positive association between the Democratic index and the Rule of law/ Crime index.</p>
 <p>The <code>lm</code> summary shows that there’s a positive slope and that R^2 value shows that this is a relatively strong linear association.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

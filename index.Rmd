@@ -22,14 +22,7 @@ The EIU Democracy Index provides a snapshot of the state of world democracy for 
 
 1. https://www.eiu.com/n/campaigns/democracy-index-2020/
 
-
-## Results
-
-
-## Conclusion
-
-
-```{r}
+```{r data cleaning, include=FALSE}
 eiu <- read_csv("EIU.csv")|>
   pivot_longer(
     cols = -c(code, country),
@@ -60,22 +53,63 @@ eiu <- read_csv("EIU.csv")|>
     country = if_else(grepl("R\xe9union", country), "Réunion", country),
     country = if_else(grepl("S\xe3o Tom\xe9 and Principe", country), "São Tomé and Principe", country)
   )
-```
 
-```{r}
 sort(unique(eiu$country))
-carib_list <- c("Antigua and Barbuda", "Bahamas, The", "Barbados") #Add more! Match from list of countries above
+carib_list <- c("Antigua and Barbuda", "Anguilla", "Argentina", "Aruba", "Bahamas, The", "Barbados", "Belize", "Bermuda", "Brazil", "British Virgin Islands", "Cayman Islands", "Chile", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "Ecuador", "El Salvador", "Guadeloupe", "Guyana", "Haiti", "Honduras", "Jamaica", "Martinique", "Montserrat", "Nicaragua", "Panama", "Paraguay", "Peru", "Puerto Rico", "St. Kitts and Nevis", "St. Lucia", "St. Vincent and the Grenadines", "Suriname", "Trinidad and Tobago", "Turks and Caicos Islands", "Uruguay", "Venezuela, RB", "Virgin Islands (U.S.)")
 
 eiu <- eiu |>
   mutate(i_caribbean = if_else(country %in% carib_list, 1, 0))
-
-summary(lm(data = eiu, GE ~ RL + VA + PV))$coefficients
-summary(lm(data = eiu |> filter(i_caribbean == 1), GE ~ RL + VA + PV))$coefficients |> knitr::kable(digits = 2)
-
 ```
 
+Our research design is observational analysis on the variables of crime (RL) on the democratic index (VA) within Caribbean countries. VA stands for "Voice and Accountability" within our data and is calculated based on a country's democracy index, vested interests, accountability of public officials, human rights, and freedom of association. RL stands for "Rule of Law" and is calculated based on a country's violent crime, organized crime rate, fairness of judicial process, enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection, and private property protection. 
 
-The democratic index is the explanatory variable and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
+The RL variable is the outcome variable. A countries rule of law index was calculated on a scale of 0 -4 and it took into consideration questions such as "Are violent demonstrations or violent civil/labor unrest likely to pose a threat to property or the conduct of business? Is violent crime likely to pose a significant problem for government and/or business?" Where a score of 0 = rule of law/crime is not a problem, and 4 = rule of law/crime is a very significant problem. The outcome ranges from 0 to 4, with a median of .45 - .50. 
+
+
+```{r, warning=FALSE, echo = FALSE, results = 'hide'}
+caribbean_eiu <- eiu |>
+  filter(i_caribbean == 1)
+
+# data distributions
+ggplot(caribbean_eiu, aes(x=RL)) +
+  geom_histogram(bins=10, fill="grey", color="black") +
+  labs(
+    title="Distribution of RL in Caribbean Countries"
+  )
+```
+The VA variable is the explanatory variable. The VA variable was calculated on a scale of 0 -4 and it took into consideration questions such as "How accountable are public officials? Is recourse possible in the case of unfair treatment do safeguards/sanctions exist to ensure to ensure officials perform competently? Is there a risk that this country could be accused of serious human rights abuses?" Where a score of 0 = very low likelihood of this country being accused of human rights abuses, and 4 = very high likelihood of this country being accused of human rights abuses. The indicators range from 0 through 4 (bad), with the median being approxiamately .56.   																				
+
+```{r, warning=FALSE, echo = FALSE, results = 'hide'}
+ggplot(caribbean_eiu, aes(x=VA)) +
+  geom_histogram(bins=10, fill="grey", color="black") +
+  labs(
+    title="Distribution of VA in Caribbean Countries"
+  )
+```
+
+## Results
+
+```{r, warning=FALSE, echo = FALSE, results = 'hide'}
+# single regression
+lm <- lm(RL ~ VA, data=caribbean_eiu)
+summary(lm)
+
+ggplot(caribbean_eiu, aes(x=VA, y=RL)) +
+  geom_smooth(method="lm", se=FALSE) +
+  geom_point()
+```
+
+ Regression Results
+
+```{r}
+# multiple regression
+lm_multiple <- lm(RL ~ VA + PV + GE + RQ + RL + CC, data=caribbean_eiu)
+summary(lm_multiple)$coefficients |>
+  knitr::kable(digits=4)
+```
+
+## Conclusion
+ and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
 
 The higher the rule of law, the stronger enforcement against crime in the country.
 
