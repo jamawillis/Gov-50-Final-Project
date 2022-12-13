@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 ## Introduction
-Democratization has suffered more reversals in 2021, with the percentage of people living in a democracy falling to well below 50% and authoritarian regimes gaining ground. The project focuses on the impact of crime and democracy using the specific variable "Rule of Law (RL)" as a measure. The data goes back from 1996 to 2021 and has various countries. However, there will be a specific obersvational study on Latin America and the Caribbean and a possible cross comparison to different regions of the world and their relationship to crime and democracy. 
+Democratization has suffered more reversals in 2021, with the percentage of people living in a democracy falling to well below 50% and authoritarian regimes gaining ground. The project focuses on the impact of crime and democracy using the specific variable "Rule of Law (RL)" as a measure. The data goes back from 1996 to 2021 and has various countries. However, there will be a specific obersvational study on Latin America and the Caribbean and a possible cross comparison to different regions of the world and their relationship to crime and democracy. The data contains over 5700 observations for countries as it relates to their democracy and crime index, and about 900 of those data points are focused on Latin America and the Caribbean. 
 
 In Latin America and the Caribbean countries, does crime have an influence democratic institutions? This study conducts a bivariate analysis of the relationship between democratic institutions and crime within Latin America and the Caribbean. I hypothesize that crime impacts their democratic institutions and that crime has increased over the years therefore as crime increase, democracy in the Caribbean decreases. Although I am using this data for the purposes of my final project it is imperative to point out that the data collected are subject to several biases, including under representation of the developing world, asymmetries in reporting countries’ definitions of homicide, and those imposed by difficulties in collecting and compiling reliable data in nations with limited statistical and organizational capacity. The explanatory variable of interest is the democratic institutions or overall democratic index of each country and the outcome variable is the rate of crime rates in Latin America and the Caribbean. 
 
@@ -77,7 +77,7 @@ ggplot(caribbean_eiu, aes(x=RL)) +
     title="Distribution of RL in Caribbean Countries"
   )
 ```
-The VA variable is the explanatory variable. The VA variable was calculated on a scale of 0 -4 and it took into consideration questions such as "How accountable are public officials? Is recourse possible in the case of unfair treatment do safeguards/sanctions exist to ensure to ensure officials perform competently? Is there a risk that this country could be accused of serious human rights abuses?" Where a score of 0 = very low likelihood of this country being accused of human rights abuses, and 4 = very high likelihood of this country being accused of human rights abuses. The indicators range from 0 through 4 (bad), with the median being approxiamately .56.   																				
+The VA variable is the explanatory variable. The VA variable was calculated on a scale of 0 -4 and it took into consideration questions such as "How accountable are public officials? Is recourse possible in the case of unfair treatment do safeguards/sanctions exist to ensure to ensure officials perform competently? Is there a risk that this country could be accused of serious human rights abuses?" Where a score of 0 = very low likelihood of this country being accused of human rights abuses, and 4 = very high likelihood of this country being accused of human rights abuses. The indicators range from 0 through 4 (bad), with the median being approximately .56.   																				
 
 ```{r, warning=FALSE, echo = FALSE, results = 'hide'}
 ggplot(caribbean_eiu, aes(x=VA)) +
@@ -88,6 +88,7 @@ ggplot(caribbean_eiu, aes(x=VA)) +
 ```
 
 ## Results
+Before regressing the RL outcome on the VA variable, the bivariate relationship between these variables can be visualized with a scatter plot. 
 
 ```{r, warning=FALSE, echo = FALSE, results = 'hide'}
 # single regression
@@ -99,6 +100,8 @@ ggplot(caribbean_eiu, aes(x=VA, y=RL)) +
   geom_point()
 ```
 
+The bivariate plot suggests that there exists a positive relationship between democratic index and rule of law/crime index. The higher the rule of law, the stronger enforcement against crime in the country.We see that countries that are considered more democratic generally are associated with stricter laws on crime. Regression analyses will offer more detailed information about this seemingly positive association.
+
  Regression Results
 
 ```{r}
@@ -108,10 +111,14 @@ summary(lm_multiple)$coefficients |>
   knitr::kable(digits=4)
 ```
 
-## Conclusion
- and the outcome variable is the rule of law or crime index. The plot suggests that there is a positive association between democratic index and rule of law/crime index, as defined by Economic Intelligence Unit. Democratic index measures based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture  and rule of law measures violent crime, organized crime, the fairness of judicial process, the enforceability of contracts, speediness of judicial process, confiscation/expropriation, intellectual property rights protection and private property protection. Thus, we see that countries that are considered more democratic generally are associated with stricter laws on crime. 
+Statistical Significance
 
-The higher the rule of law, the stronger enforcement against crime in the country.
+
+Causality and Confounders
+
+## Conclusion
+
+
 
 Based on this data, the line of regression shows a positive association between the Democratic index and the Rule of law/ Crime index. 
 
