@@ -1535,12 +1535,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
 <h2 id="results">Results</h2>
-<p>Before regressing the RL outcome on the VA variable, the bivariate relationship between these variables can be visualized with a scatter plot.</p>
+<p>Before regressing the “Rule of Law” variable outcome on the “Voice of Accountability” variable, the bivariate relationship between these variables can be visualized with a scatter plot.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
 <p>The bivariate plot suggests that there exists a positive relationship between democratic index and rule of law/crime index. The higher the rule of law, the stronger enforcement against crime in the country.We see that countries that are considered more democratic generally are associated with stricter laws on crime. Regression analyses will offer more detailed information about this seemingly positive association.</p>
 <p>Regression Results</p>
+<p>Results from the regression model is below. The bivariate model, which regresses rule of law on the democratic index.</p>
+<p>Regression results show that a statistically significant, positive correlation exists between a country’s rule of law and their democratic index.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># multiple regression</span></span>
@@ -1604,9 +1606,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tbody>
 </table>
 </div>
+<p>Even though this is a multivariate model, I want to look specifically at the VA variable, which is the democratic index on the rule of law and which is statistically significant because because their p-values equal 0.000. When we keep all other factors constant, for every 1 unit increase in the VA variable we get a .338 increase in the RL intercept.</p>
 <p>Statistical Significance</p>
-<p>Causality and Confounders
-There are many factors that are additionally taken into consideration when looking at the bivariate relationship between a nation’s democracy and crime. However, I specifically chose to isolate otuside variables to have a deeper look at how crime, exactly, alter with a nation’s democracy. When you take about crime within a country, tangentially the conversation of economics should come into play. Therefore, environmental confounders like poverty level within a country, unemployment rates, and the impact of education should be taken into consideration.</p>
+<p>In the multivariate model, the association between RL and VA is statistically significant at the test level α=0.05. Specifically, the p-value on the coefficient is 0. If hypothesizing that the association between VA and RL was non-zero, then the coefficient’s p-value of 0 would suggest there is a near 0% probability that the estimated association observed here is as extreme and meaningless as any estimated association from the null distribution. On the other hand, there is a near 100% probability that the estimated association is not due to random chance, because it is so dissimilar to what the estimated association would look like in the null distribution.</p>
+<p>Causality and Confounders</p>
+<p>There are many factors that are additionally taken into consideration when looking at the bivariate relationship between a nation’s democracy and crime. However, I specifically chose to isolate otuside variables to have a deeper look at how crime, exactly, alter with a nation’s democracy. When you take about crime within a country, tangentially the conversation of economics should come into play. Therefore, environmental confounders like poverty level within a country, unemployment rates, and the impact of education should be taken into consideration.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Based on this data, the line of regression shows a positive association between the Democratic index and the Rule of law/ Crime index.</p>
 <p>The <code>lm</code> summary shows that there’s a positive slope and that R^2 value shows that this is a relatively strong linear association.</p>

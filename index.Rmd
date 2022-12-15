@@ -88,7 +88,7 @@ ggplot(caribbean_eiu, aes(x=VA)) +
 ```
 
 ## Results
-Before regressing the RL outcome on the VA variable, the bivariate relationship between these variables can be visualized with a scatter plot. 
+Before regressing the "Rule of Law" variable outcome on the "Voice of Accountability" variable, the bivariate relationship between these variables can be visualized with a scatter plot. 
 
 ```{r, warning=FALSE, echo = FALSE, results = 'hide'}
 # single regression
@@ -103,6 +103,10 @@ ggplot(caribbean_eiu, aes(x=VA, y=RL)) +
 The bivariate plot suggests that there exists a positive relationship between democratic index and rule of law/crime index. The higher the rule of law, the stronger enforcement against crime in the country.We see that countries that are considered more democratic generally are associated with stricter laws on crime. Regression analyses will offer more detailed information about this seemingly positive association.
 
  Regression Results
+ 
+ Results from the regression model is below. The bivariate model, which regresses rule of law on the democratic index.
+ 
+ Regression results show that a statistically significant, positive correlation exists between a country's rule of law and their democratic index. 
 
 ```{r}
 # multiple regression
@@ -110,11 +114,14 @@ lm_multiple <- lm(RL ~ VA + PV + GE + RQ + RL + CC, data=caribbean_eiu)
 summary(lm_multiple)$coefficients |>
   knitr::kable(digits=4)
 ```
+Even though this is a multivariate model, I want to look specifically at the VA variable, which is the democratic index on the rule of law and which is statistically significant because because their p-values equal 0.000. When we keep all other factors constant, for every 1 unit increase in the VA variable we get a .338 increase in the RL intercept.
 
 Statistical Significance
 
+In the multivariate model, the association between RL and VA is statistically significant at the test level α=0.05. Specifically, the p-value on the coefficient is 0. If hypothesizing that the association between VA and RL was non-zero, then the coefficient’s p-value of 0 would suggest there is a near 0% probability that the estimated association observed here is as extreme and meaningless as any estimated association from the null distribution. On the other hand, there is a near 100% probability that the estimated association is not due to random chance, because it is so dissimilar to what the estimated association would look like in the null distribution.
 
 Causality and Confounders
+
 There are many factors that are additionally taken into consideration when looking at the bivariate relationship between a nation's democracy and crime. However, I specifically chose to isolate otuside variables to have a deeper look at how crime, exactly, alter with a nation's democracy. When you take about crime within a country, tangentially the conversation of economics should come into play. Therefore, environmental confounders like poverty level within a country, unemployment rates, and the impact of education should be taken into consideration. 
 
 ## Conclusion
